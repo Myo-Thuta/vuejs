@@ -102,9 +102,8 @@
                                         <h5 class="card-title text-success">Lesson: {{lesson.subject}}</h5>
                                         <p class="card-text"><strong>Description:</strong> {{lesson.description}}</p>
                                         <p class="card-text"><strong>Location:</strong> {{lesson.location}}</p>
-                                        <p class="card-text"><strong>Spaces Added:</strong> {{cartCount(lesson.id)}}</p>
+                                        <p class="card-text"><strong>Spaces Added:</strong> 1</p>
                                         <p class="card-text"><strong>Price:</strong> £{{lesson.price}}</p>
-                                        <p class="card-text text-danger"><strong>Total Price:</strong> £{{lesson.price * cartCount(lesson.id)}}</p>
                                         <button class="btn btn-danger w-100" @click="removeFromCart(lesson)">Remove from Cart</button>
                                     </div>
                                 </div>
