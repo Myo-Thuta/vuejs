@@ -111,7 +111,6 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-12 text-center">
-                                <h4 class="text-success">Total Price for All Lessons: £{{totalprice}}</h4>
                                 <button class="btn btn-primary" @click="showlessons">Continue Shopping</button>
                             </div>
                         </div>
@@ -290,11 +289,6 @@
                     return this.cart.map(cartLessonId => 
                         this.lessons.find(lesson => lesson.id === cartLessonId)
                     );
-                },
-                totalprice(){
-                    return this.cartLessons.reduce((sum, lesson) => {
-                        return sum + lesson.price * this.cartCount(lesson.id);
-                    }, 0);
                 },
                 validateCheckout(){
                     const namePattern = /^[a-zA-Z]+$/; // Letters only
