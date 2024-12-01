@@ -245,7 +245,7 @@
                         return count;
                 },
                 SearchResults(){
-                    fetch(`https://localhost:3000/search?q=${this.searchQuery}`)
+                    fetch(`https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/search?q=${this.searchQuery}`)
                     .then(response => response.json())
                     .then(data => {
                         this.lessons = data; // Update the lessons array
