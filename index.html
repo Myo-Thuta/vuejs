@@ -200,7 +200,7 @@
                 orderSubmitted: false, // To track submission
             },
             created: function(){
-                fetch("http://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/lessons")
+                fetch("https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/lessons")
                 .then(response => response.json())
                 .then(json => {
                 console.log(json);
