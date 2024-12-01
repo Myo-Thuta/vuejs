@@ -245,7 +245,7 @@
                         return count;
                 },
                 SearchResults(){
-                    fetch(`http://localhost:3000/search?q=${this.searchQuery}`)
+                    fetch(`https://localhost:3000/search?q=${this.searchQuery}`)
                     .then(response => response.json())
                     .then(data => {
                         this.lessons = data; // Update the lessons array
