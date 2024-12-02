@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="row g-4">
-                    <div class="col-lg-4 col-md-6" v-for="lesson in sortedlessons">
+                    <div class="col-lg-4 col-md-6" v-for="lesson in sortedlessons" :key="lesson.id">
                         <div class="card shadow-sm h-100">
                             <img v-bind:src="lesson.image" class="card-img-top" alt="Lesson Image" style="height: 300px;">
                             <div class="card-body">
