@@ -219,19 +219,20 @@
                         this.cart.splice(index, 1);
                     }
                 },
-                checkoutForm() {
+                checkoutForm(event) {
+                    event.preventDefault(); // Prevent default form submission
                     if (this.validateCheckout) {
                         const order = {
-                            name: this.register.name,
-                            email: this.register.email,
-                            address: this.register.address,
-                            city: this.register.city,
-                            postcode: this.register.postcode,
-                            phone: this.register.phone,
+                            name: this.register.name.trim(),
+                            email: this.register.email.trim(),
+                            address: this.register.address.trim(),
+                            city: this.register.city.trim(),
+                            postcode: this.register.postcode.trim(),
+                            phone: this.register.phone.trim(),
                             lessonIDs: this.cart,
                         };
 
-                        console.log("Submitting order:", order); // Debugging the payload
+                        console.log("Submitting order:", order); // Debugging payload
 
                         fetch("https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/orders", {
                             method: "POST",
@@ -248,7 +249,7 @@
                                 alert("Order placed successfully!");
                                 this.cart = []; // Clear the cart
                             } else {
-                                alert(`Failed to place order. ${data.msg || "Please try again."}`);
+                                alert(`Failed to place order. Reason: ${data.msg || "Unknown error. Please try again."}`);
                             }
                         })
                         .catch(err => {
@@ -256,6 +257,7 @@
                             alert("There was a network issue. Please try again later.");
                         });
                     } else {
+                        console.warn("Validation failed. Check the input fields.");
                         alert("Please fill in valid details for Name and Phone.");
                     }
                 },
