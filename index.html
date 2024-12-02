@@ -262,6 +262,17 @@
                         alert("Please fill in valid details for Name and Phone.");
                     }
                 },
+                updateSpaces() {
+                    this.cart.forEach((lessonId) => {
+                        const lesson = this.lessons.find(l => l.id === lessonId);
+                        if (lesson) {
+                            lesson.availablespaces -= 1; // Deduct the spaces
+                        }
+                    });
+                    this.cart = [];
+                    this.register = { name: '', email: '', address: '', city: '', postcode: '', phone: '' };
+                    this.showlessons();
+                },
                 cartCount(id){
                         let count = 0;
                         for (let i = 0; i < this.cart.length; i++) {
