@@ -215,43 +215,70 @@
                     }
                 },
                 checkoutForm() {
-                     // Prepare the payload
-                    const payload = {
-                        name: this.register.name,
-                        email: this.register.email,
-                        address: this.register.address,
-                        city: this.register.city,
-                        postcode: this.register.postcode,
-                        phone: this.register.phone,
-                        lessonIDs: this.cart // Assuming cart stores the lesson IDs
-                    };
-                    // POST the data to the backend
-                    fetch("https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/orders", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                            body: JSON.stringify(payload)
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                            return response.json();
-                        })
-                    .then(data => {
-                        console.log("Order submitted:", data);
-                        alert("Order Submitted Successfully!");
-                        this.orderSubmitted = true;
-                        // Clear the form and cart
-                        this.register = { name: '', email: '', address: '', city: '', postcode: '', phone: '' };
-                        this.cart = [];
-                    })
-                    .catch(error => {
-                        console.error("Error submitting order:", error);
-                        alert("Error submitting order. Please try again.");
-                    });
-                },
+    // Prepare the payload
+    const payload = {
+        name: this.register.name.trim(),
+        email: this.register.email.trim(),
+        address: this.register.address.trim(),
+        city: this.register.city.trim(),
+        postcode: this.register.postcode.trim(),
+        phone: this.register.phone.trim(),
+        lessonIDs: this.cart // Assuming cart stores the lesson IDs
+    };
+
+    // Basic validation before sending the request
+    if (!payload.name || !payload.email || !payload.address || !payload.city || !payload.postcode || !payload.phone) {
+        alert("Please fill in all required fields.");
+        return;
+    }
+
+    if (!/^[a-zA-Z\s]+$/.test(payload.name)) {
+        alert("Name must contain only letters and spaces.");
+        return;
+    }
+
+    if (!/^\d+$/.test(payload.phone)) {
+        alert("Phone number must contain only digits.");
+        return;
+    }
+
+    // POST the data to the backend
+    fetch("https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/orders", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Order submitted:", data);
+        alert("Order Submitted Successfully!");
+        this.orderSubmitted = true;
+
+        // Clear the form and cart
+        this.register = { name: '', email: '', address: '', city: '', postcode: '', phone: '' };
+        this.cart = [];
+    })
+    .catch(error => {
+        console.error("Error submitting order:", error);
+
+        // Provide detailed error messages for debugging
+        if (error.message.includes("Failed to fetch")) {
+            alert("Network error: Unable to connect to the server. Please try again later.");
+        } else if (error.message.includes("status: 400")) {
+            alert("Invalid data submitted. Please review your input.");
+        } else {
+            alert("Error submitting order. Please try again.");
+        }
+    });
+},
+
                 cartCount(id){
                         let count = 0;
                         for (let i = 0; i < this.cart.length; i++) {
