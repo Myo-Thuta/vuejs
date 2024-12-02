@@ -219,7 +219,7 @@
                         this.cart.splice(index, 1);
                     }
                 },
-                checkoutForm(){
+                checkoutForm() {
                     if (this.validateCheckout) {
                         const order = {
                             name: this.register.name,
@@ -230,7 +230,9 @@
                             phone: this.register.phone,
                             lessonIDs: this.cart,
                         };
-                        
+
+                        console.log("Submitting order:", order); // Debugging the payload
+
                         fetch("https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/orders", {
                             method: "POST",
                             headers: {
@@ -238,16 +240,21 @@
                             },
                             body: JSON.stringify(order)
                         })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.msg === "Order created successfully") {
-                                    alert("Order placed successfully!");
-                                    this.cart = []; // Clear the cart
-                                } else {
-                                    alert("Failed to place order. Please try again.");
-                                }
-                            })
-                            .catch(err => console.error("Error submitting order:", err));
+                        .then(async response => {
+                            const data = await response.json();
+                            console.log("Server response:", data); // Debugging server response
+
+                            if (response.ok && data.msg === "Order created successfully") {
+                                alert("Order placed successfully!");
+                                this.cart = []; // Clear the cart
+                            } else {
+                                alert(`Failed to place order. ${data.msg || "Please try again."}`);
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Error submitting order:", err);
+                            alert("There was a network issue. Please try again later.");
+                        });
                     } else {
                         alert("Please fill in valid details for Name and Phone.");
                     }
