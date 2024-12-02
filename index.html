@@ -245,7 +245,7 @@
                         this.orderSubmitted = true;
                         // Clear the form and cart
                         this.register = { name: '', email: '', address: '', city: '', postcode: '', phone: '' };
-                        this.cart = [];
+                        this.cart = []; 
                     })
                     .catch(error => {
                         console.error("Error submitting order:", error);
