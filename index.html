@@ -215,7 +215,6 @@
                     }
                 },
                 checkoutForm() {
-                    if (this.validateCheckout) {
                         // Prepare the payload
                         const payload = {
                             name: this.register.name,
@@ -253,9 +252,6 @@
                             console.error("Error submitting order:", error);
                             alert("Error submitting order. Please try again.");
                         });
-                    } else {
-                        alert("Please fill in valid details for Name and Phone.");
-                    }
                 },
                 updateSpaces() {
                     this.cart.forEach((lessonId) => {
