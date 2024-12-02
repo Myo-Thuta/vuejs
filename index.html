@@ -149,7 +149,7 @@
                                             </div>
                                             <div class="text-center mt-4">
                                                 <button type="submit" class="btn btn-success w-50" @click="checkoutForm" v-if="validateCheckout">Check Out</button>
-                                                <button type="submit" class="btn btn-secondary w-50" @click="checkoutForm" disabled v-else>Check Out</button>
+                                                <button type="submit" class="btn btn-secondary w-50" disabled v-else>Check Out</button>
                                             </div>
                                         </form>
                                     </div>
@@ -189,6 +189,7 @@
                 sortAttribute: 'subject', // Default sort attribute
                 sortOrder: 'asc', // Default sort order
                 searchQuery:'',
+                orderSubmitted: false, // To track submission
             },
             created: function(){
                 fetch("https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/lessons")
@@ -218,46 +219,12 @@
                         this.cart.splice(index, 1);
                     }
                 },
-                checkoutForm(event) {
-                    event.preventDefault(); // Prevent default form submission
+                checkoutForm(){
                     if (this.validateCheckout) {
-                        const order = {
-                            name: this.register.name,
-                            email: this.register.email,
-                            address: this.register.address,
-                            city: this.register.city,
-                            postcode: this.register.postcode,
-                            phone: this.register.phone,
-                            lessonIDs: this.cart,
-                        };
-
-                        console.log("Submitting order:", order); // Debugging payload
-
-                        fetch("https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/orders", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify(order)
-                        })
-                        .then(async response => {
-                            const data = await response.json();
-                            console.log("Server response:", data); // Debugging server response
-
-                            if (response.ok && data.msg === "Order created successfully") {
-                                alert("Order placed successfully!");
-                                this.cart = []; // Clear the cart
-                            } else {
-                                alert(`Failed to place order. Reason: ${data.msg || "Unknown error. Please try again."}`);
-                            }
-                        })
-                        .catch(err => {
-                            console.error("Error submitting order:", err);
-                            alert("There was a network issue. Please try again later.");
-                        });
+                        this.orderSubmitted = true;
+                        alert('Order Submitted Successfully!');
                     } else {
-                        console.warn("Validation failed. Check the input fields.");
-                        alert("Please fill in valid details for Name and Phone.");
+                        alert('Please fill in valid details for Name and Phone.');
                     }
                 },
                 cartCount(id){
