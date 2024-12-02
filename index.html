@@ -68,7 +68,7 @@
                                 <p class="card-text"><strong>Description:</strong> {{lesson.description}}</p>
                                 <p class="card-text"><strong>Location:</strong> {{lesson.location}}</p>
                                 <p class="card-text"><strong>Price:</strong> £{{lesson.price}}</p>
-                                <p class="card-text"><strong>Spaces:</strong> {{lesson.availablespaces - cartCount(lesson.id)}}</p>
+                                <p class="card-text"><strong>Spaces:</strong> {{spacesleft(lesson)}}</p>
                                 <div class="mt-3">
                                     <button class="btn btn-primary w-100 mb-2" @click="addToCart(lesson)" v-if="canAddToCart(lesson)">Add to Cart</button>
                                     <button class="btn btn-danger w-100 mb-2" disabled v-else> Add to Cart </button>
