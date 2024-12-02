@@ -222,12 +222,12 @@
                     event.preventDefault(); // Prevent default form submission
                     if (this.validateCheckout) {
                         const order = {
-                            name: this.register.name.trim(),
-                            email: this.register.email.trim(),
-                            address: this.register.address.trim(),
-                            city: this.register.city.trim(),
-                            postcode: this.register.postcode.trim(),
-                            phone: this.register.phone.trim(),
+                            name: this.register.name,
+                            email: this.register.email,
+                            address: this.register.address,
+                            city: this.register.city,
+                            postcode: this.register.postcode,
+                            phone: this.register.phone,
                             lessonIDs: this.cart,
                         };
 
