@@ -221,10 +221,35 @@
                 },
                 checkoutForm(){
                     if (this.validateCheckout) {
-                        this.orderSubmitted = true;
-                        alert('Order Submitted Successfully!');
+                        const order = {
+                            name: this.register.name,
+                            email: this.register.email,
+                            address: this.register.address,
+                            city: this.register.city,
+                            postcode: this.register.postcode,
+                            phone: this.register.phone,
+                            lessonIDs: this.cart,
+                        };
+                        
+                        fetch("https://valiantedujoy-env-1.eba-5muxxuhz.eu-west-2.elasticbeanstalk.com/collections/orders", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(order)
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.msg === "Order created successfully") {
+                                    alert("Order placed successfully!");
+                                    this.cart = []; // Clear the cart
+                                } else {
+                                    alert("Failed to place order. Please try again.");
+                                }
+                            })
+                            .catch(err => console.error("Error submitting order:", err));
                     } else {
-                        alert('Please fill in valid details for Name and Phone.');
+                        alert("Please fill in valid details for Name and Phone.");
                     }
                 },
                 cartCount(id){
